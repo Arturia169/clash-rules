@@ -1,0 +1,14 @@
+# 主流加密货币交易所手动补充名单
+# 匹配策略组: 💰 加密交易所
+
+DOMAIN-SUFFIX,bnappb.com
+DOMAIN-SUFFIX,bntrace.com
+DOMAIN-SUFFIX,binance.com
+DOMAIN-SUFFIX,binance.cloud
+DOMAIN-SUFFIX,binance.im
+DOMAIN-SUFFIX,okx.com
+DOMAIN-SUFFIX,okx-dns.com
+DOMAIN-SUFFIX,okx.im
+DOMAIN-SUFFIX,bybit.com
+DOMAIN-SUFFIX,gate.io
+DOMAIN-SUFFIX,mexc.com

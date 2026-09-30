@@ -1,0 +1,36 @@
+# Web3 链上生态、钱包、RPC、区块链浏览器、DeFi、资讯平台
+# 匹配策略组: 🌐 Web3链上
+
+DOMAIN-SUFFIX,metamask.io
+DOMAIN-SUFFIX,phantom.app
+DOMAIN-SUFFIX,rabby.io
+DOMAIN-SUFFIX,walletconnect.com
+DOMAIN-SUFFIX,walletconnect.org
+DOMAIN-SUFFIX,tronlink.org
+DOMAIN-SUFFIX,infura.io
+DOMAIN-SUFFIX,alchemy.com
+DOMAIN-SUFFIX,ankr.com
+DOMAIN-SUFFIX,quicknode.com
+DOMAIN-SUFFIX,chainlist.org
+DOMAIN-SUFFIX,etherscan.io
+DOMAIN-SUFFIX,bscscan.com
+DOMAIN-SUFFIX,solscan.io
+DOMAIN-SUFFIX,tronscan.org
+DOMAIN-SUFFIX,polygonscan.com
+DOMAIN-SUFFIX,arbiscan.io
+DOMAIN-SUFFIX,basescan.org
+DOMAIN-SUFFIX,optimistic.etherscan.io
+DOMAIN-SUFFIX,coinmarketcap.com
+DOMAIN-SUFFIX,coingecko.com
+DOMAIN-SUFFIX,dexscreener.com
+DOMAIN-SUFFIX,dextools.io
+DOMAIN-SUFFIX,defillama.com
+DOMAIN-SUFFIX,uniswap.org
+DOMAIN-SUFFIX,pancakeswap.finance
+DOMAIN-SUFFIX,1inch.io
+DOMAIN-SUFFIX,revoke.cash
+DOMAIN-SUFFIX,coindesk.com
+DOMAIN-SUFFIX,cointelegraph.com
+DOMAIN-SUFFIX,panewslab.com
+DOMAIN-SUFFIX,foresightnews.pro
+DOMAIN-SUFFIX,theblock.co

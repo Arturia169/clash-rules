@@ -1,0 +1,11 @@
+# 自用开发 / 搜索 / MCP 工具链 / 常用外网代理
+# 匹配策略组: 🚀 默认代理
+
+DOMAIN-SUFFIX,tavily.com
+DOMAIN-SUFFIX,firecrawl.dev
+DOMAIN-SUFFIX,context7.com
+DOMAIN-SUFFIX,jevai.org
+DOMAIN-SUFFIX,typesafe.ai
+DOMAIN-SUFFIX,cline.bot
+DOMAIN-SUFFIX,hsex.icu
+DOMAIN-SUFFIX,qichiyu.com

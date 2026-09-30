@@ -1,0 +1,8 @@
+# 节点测速平台域名
+# 匹配策略组: 🚀 节点测速
+
+DOMAIN,www.gstatic.com
+DOMAIN,speed.cloudflare.com
+DOMAIN-SUFFIX,fast.com
+DOMAIN-SUFFIX,speedtest.net
+DOMAIN-SUFFIX,measurementlab.net

@@ -1,0 +1,5 @@
+# Google 商店与特殊域名分流补充
+# 匹配策略组: 🍀 Google
+
+DOMAIN-SUFFIX,googleapis.cn
+DOMAIN-SUFFIX,xn--ngstr-lra8j.com

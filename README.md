@@ -9,7 +9,7 @@
 | [`rules/custom_proxy.list`](rules/custom_proxy.list) | 自用开发、搜索与 MCP 工具（Tavily, Firecrawl, Cline 等） | `🚀 默认代理` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_proxy.list` |
 | [`rules/custom_chatgpt.list`](rules/custom_chatgpt.list) | 自用 AI 镜像与 API 分流补充 | `🤖 ChatGPT` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_chatgpt.list` |
 | [`rules/custom_crypto.list`](rules/custom_crypto.list) | 主流加密货币交易所补充（币安、OKX、Bybit、Gate 等） | `💰 加密交易所` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_crypto.list` |
-| [`rules/custom_web3.list`](rules/custom_web3.list) | Web3 钱包、链上 RPC、区块链浏览器、DeFi | `🌐 Web3链上` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_web3.list` |
+| [`rules/custom_web3.list`](rules/custom_web3.list) | Web3 钱包、链上 RPC、区块链浏览器、DeFi 与跨链服务 | `🌐 Web3链上` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_web3.list` |
 | [`rules/custom_speedtest.list`](rules/custom_speedtest.list) | 节点测速平台 | `🚀 节点测速` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_speedtest.list` |
 | [`rules/custom_telegram.list`](rules/custom_telegram.list) | Telegram 常用域名与官方 IP 网段 | `📲 Telegram` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_telegram.list` |
 | [`rules/custom_google.list`](rules/custom_google.list) | Google Play 与国区特殊加速域名 | `🍀 Google` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_google.list` |
@@ -48,3 +48,18 @@ rules:
   - RULE-SET,custom_crypto,💰 加密交易所
   - RULE-SET,custom_web3,🌐 Web3链上
 ```
+
+## Web3 规则维护与生效
+
+- `custom_web3.list` 按钱包、RPC、浏览器、DeFi、跨链、行情和资讯分类维护。
+- 使用 `DOMAIN-SUFFIX` 覆盖服务域名及其子域名；已覆盖的子域名不重复添加。
+- 官网与 API/RPC 可能使用不同后缀，例如 `quicknode.com` 与 `quiknode.pro`、`1inch.io` 与 `1inch.com`，需要分别收录。
+- 如果主配置还使用公共 `category-cryptocurrency` 规则集，建议顺序为交易所专用 `custom_crypto`、`custom_web3`、公共加密货币分类。这样 DeBank、Aave、dRPC 等服务会先进入 Web3 策略组。
+- 本地修改需同步至 GitHub 后，使用 HTTP 规则集的客户端才会获取更新；可在客户端手动更新规则集，或等待配置中的更新周期。
+
+## 其他自定义规则维护
+
+- 测速：`measurementlab.net` 覆盖 M-Lab 网站与服务发现，`measurement-lab.org` 覆盖实际测速服务器。FAST 从自定义测速名单中移除，在 3.0 配置中由 Netflix 公共规则统一处理页面和 CDN 流量；`www.gstatic.com` 由 Google 规则接管。
+- Telegram：使用 [官方 IP 清单](https://core.telegram.org/resources/cidr.txt) 维护 IPv4/IPv6 网段；Nicegram 使用 `nicegram.app` 后缀，避免关键词匹配到无关域名。`telegram.org` 已覆盖 `api.telegram.org`。
+- 交易所：同时保留 `gate.io` 和 `gate.com`，覆盖原有域名与当前官方域名。
+- AI、开发工具与 Google 补充规则沿用原有配置，不重复添加公共规则已覆盖的官方 AI 域名。

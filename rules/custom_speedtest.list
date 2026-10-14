@@ -1,8 +1,9 @@
 # 节点测速平台域名
 # 匹配策略组: 🚀 节点测速
+# FAST 使用 Netflix CDN，交由主配置的 Netflix 规则统一分流。
+# www.gstatic.com 交由 Google 规则分流；节点健康检查通过各节点直接发起。
 
-DOMAIN,www.gstatic.com
 DOMAIN,speed.cloudflare.com
-DOMAIN-SUFFIX,fast.com
 DOMAIN-SUFFIX,speedtest.net
 DOMAIN-SUFFIX,measurementlab.net
+DOMAIN-SUFFIX,measurement-lab.org

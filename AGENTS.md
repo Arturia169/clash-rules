@@ -1,35 +1,57 @@
 # AGENTS.md
 
-个人 Clash / Mihomo 远程分流规则集。客户端通过 `rule-providers` 远程引用 `rules/*.list`。
+个人 Clash / Mihomo 远程分流规则集，外加一份公开脱敏的主配置模板。客户端通过 `rule-providers` 远程引用 `rules/*.list`。
 
-> **这是纯数据仓库，不是代码项目。** 没有构建、没有测试、没有依赖、没有 CI。
-> 改动的全部意义就是：让客户端的 `RULE-SET` 匹配到正确的域名/IP。
+> **这是数据仓库，不是代码项目。** 没有构建、没有测试、没有依赖、没有 CI。
+> 改动只有两个意义：让客户端的 `RULE-SET` 匹配到正确的域名/IP；让 `configs/` 里的模板仍能被 mihomo 直接加载。
 
 ## 仓库结构
 
 ```
-rules/custom_*.list   # 规则数据，每个文件对应一个策略组
-README.md             # 文件清单表 + 客户端配置示例（改规则文件时必须同步）
+rules/custom_*.list        # 规则数据，每个文件对应一个策略组
+configs/configV 3.0.yaml   # 主配置公开脱敏模板（DNS / TUN / 策略组 / 规则顺序 / 远程规则集引用）
+README.md                  # 清单表 + 配置示例 + 各类规则维护说明（改规则文件时必须同步）
+.gitignore                 # 忽略 configs/*.local.yaml
 ```
 
-现有 7 个文件及其绑定策略组：
+现有 7 个规则文件：
 
-| 文件 | 策略组 |
-| :--- | :--- |
-| `custom_proxy.list` | 🚀 默认代理 |
-| `custom_chatgpt.list` | 🤖 ChatGPT |
-| `custom_telegram.list` | 📲 Telegram |
-| `custom_google.list` | 🍀 Google |
-| `custom_speedtest.list` | 🚀 节点测速 |
-| `custom_crypto.list` | 💰 加密交易所 |
-| `custom_web3.list` | 🌐 Web3链上 |
+| 文件 | 管什么 | 策略组 |
+| :--- | :--- | :--- |
+| `custom_proxy.list` | 自用开发、搜索、MCP 工具链（Tavily / Firecrawl / Context7 等） | 🚀 默认代理 |
+| `custom_chatgpt.list` | 自用 AI 镜像与 API 补充 | 🤖 ChatGPT |
+| `custom_telegram.list` | **仅**第三方客户端补充（Nicegram） | 📲 Telegram |
+| `custom_google.list` | Google Play 与国区特殊加速域名 | 🍀 Google |
+| `custom_speedtest.list` | 节点测速平台 + 运营商自建测速主机关键词 | 🚀 节点测速 |
+| `custom_crypto.list` | 主流交易所补充（币安 / OKX / Bybit / Gate 等） | 💰 加密交易所 |
+| `custom_web3.list` | Web3 钱包、链上 RPC、浏览器、DeFi、跨链 | 🌐 Web3链上 |
+
+## ⛔ 安全红线：`configs/` 是公开仓库
+
+`configs/configV 3.0.yaml` 是**脱敏模板**，全世界都能看到它。
+
+1. **绝不**把真实订阅 URL、节点服务器地址、UUID、密码、Reality `public-key` / `short-id`、个人资产直连规则写进这个文件。
+2. 占位值必须保持原样：IP 用 `192.0.2.x`（RFC 5737 文档保留段）、UUID 用 `00000000-0000-4000-8000-000000000001`、`public-key` 用全 `A`。
+3. 真实配置放 `configs/*.local.yaml`，已被 `.gitignore` 忽略。**永远不要** `git add -f` 它。
+4. 改完模板必须自查。第一条列出全部凭据行 —— 只允许全 0 的 uuid / 全 `A` 的 public-key / 全 0 的 short-id / 含 `REPLACE` 的 password；第二条**必须零输出**：
+
+```bash
+# A. 凭据行：逐行确认是占位值
+grep -nE '^\s*(uuid|password|public-key|short-id):' "configs/configV 3.0.yaml"
+
+# B. 订阅与节点地址：只允许 example.com 或 192.0.2.x（应无输出）
+grep -nE '^\s*(url|server):' "configs/configV 3.0.yaml" \
+  | grep -vE '192\.0\.2\.|example\.com|gstatic\.com|generate_204'
+```
+
+> 不要用 `grep -i reality` 这类宽匹配查脱敏 —— 策略组名字里就带 `Reality` / `HY2`，会刷出几十行噪音，把真正的凭据行淹掉。
 
 ## 硬性规则（动手前必读）
 
 1. **每行只能是规则本身，绝不能在行尾写策略组名。**
    错误：`DOMAIN-SUFFIX,binance.com,💰 加密交易所`
    正确：`DOMAIN-SUFFIX,binance.com`
-   策略组是在客户端主配置的 `RULE-SET` 处绑定的，写进 `.list` 里会导致解析失败。
+   策略组是在主配置的 `RULE-SET` 处绑定的，写进 `.list` 里会导致解析失败。
 
 2. **文件头两行注释固定格式，修改内容时保留，不要删改：**
    ```
@@ -54,6 +76,20 @@ README.md             # 文件清单表 + 客户端配置示例（改规则文�
 
 8. **不写注释掉的历史规则**。删就删干净，需要留痕用 git history。
 
+9. **不提交 `configs/*.local.yaml`**，哪怕只是临时调试。真实凭据一旦进 git history，删文件也抹不掉。
+
+## 现行分工（别把已经交给公共规则的域名加回来）
+
+这些是踩过的重复，动手前先确认：
+
+- **Telegram**：本仓库只补第三方客户端（`nicegram.app`）。官方域名与 IPv4/IPv6 网段由主配置的公共 `telegram_domain` / `telegram_ip` 维护，**不要手动加回**。TON 等链上域名由优先级更高的 `custom_web3` 接管。
+- **测速**：用 `DOMAIN-KEYWORD,speedtest` 和 `DOMAIN-KEYWORD,ookla` 覆盖运营商自建主机（规则匹配域名，不限制端口）。`fast.com` 已移除，交给 Netflix 公共规则；`www.gstatic.com` 交给 Google 规则。
+- **AI / 开发工具**：不重复添加公共 AI 规则已覆盖的官方域名。
+- **交易所**：`gate.io` 和 `gate.com` 都要留，覆盖新旧官方域名。
+- **Web3**：官网和 API/RPC 常是不同后缀（`quicknode.com` / `quiknode.pro`、`1inch.io` / `1inch.com`），需要分别收录；已覆盖的子域名不重复加。
+
+**优先级**：`rules:` 里越靠前越先匹配。`custom_crypto` / `custom_web3` 必须排在 Telegram 公共分类、`category-cryptocurrency`、Google 等服务 IP 规则**之前**；个人明确规则（如 `typesafe.ai` 走默认代理）排在对应公共大类之前。
+
 ## 新增一个规则文件
 
 必须同时改四处，缺一不可：
@@ -63,7 +99,7 @@ README.md             # 文件清单表 + 客户端配置示例（改规则文�
 3. README 的 `rule-providers` 示例加一条（沿用 `<<: *class` 锚点）
 4. README 的 `rules:` 列表加一行 `RULE-SET,<name>,<策略组>`
 
-**顺序即优先级**：`rules:` 里越靠前越先匹配。放新文件时想清楚它该在哪个位置，不要默认塞到末尾。
+如果新文件要在主配置模板里生效，还要在 `configs/configV 3.0.yaml` 的 `rule-providers` 和 `rules:` 里同步加，位置按上面的优先级规矩定。
 
 ## 提交前自检
 
@@ -87,7 +123,7 @@ grep -rhE '^(DOMAIN|DOMAIN-SUFFIX|DOMAIN-KEYWORD),' rules/ | awk -F, '{print $2}
 awk -F, '/^IP-CIDR6?,/ && $3 != "no-resolve" {print FILENAME":"FNR": "$0}' rules/*.list
 ```
 
-四条都无输出才算干净。
+四条都无输出才算干净。**不要用 `grep -v '^前缀'` 做这件事** —— 它只看行首，`DOMAIN-SUFFIX,evil.com,💰 加密交易所` 这种最典型的错误会直接漏过去。
 
 ## 发布与生效
 
@@ -105,5 +141,5 @@ awk -F, '/^IP-CIDR6?,/ && $3 != "no-resolve" {print FILENAME":"FNR": "$0}' rules
 ```
 feat: 新增 <域名> 到 custom_<组>
 fix: 修正 custom_<组> 中错误的匹配类型
-chore: 更新 README 说明
+docs: 更新 README / AGENTS 说明
 ```

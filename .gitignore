@@ -1,0 +1,3 @@
+# Local configuration copies may contain subscription URLs and node credentials.
+configs/*.local.yaml
+configs/*.local.yml

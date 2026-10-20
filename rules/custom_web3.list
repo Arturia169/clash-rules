@@ -1,14 +1,17 @@
 # Web3 链上生态、钱包、RPC、区块链浏览器、DeFi、资讯平台
 # 匹配策略组: 🌐 Web3链上
-# 主配置中应排在 category-cryptocurrency 等公共加密货币分类规则之前。
+# 主配置中应排在 Telegram、加密货币公共分类和服务 IP 规则之前。
 
 # 钱包、连接协议与资产查询
 DOMAIN-SUFFIX,metamask.io
 DOMAIN-SUFFIX,phantom.app
+DOMAIN-SUFFIX,phantom.com
 DOMAIN-SUFFIX,rabby.io
 DOMAIN-SUFFIX,tronlink.org
 DOMAIN-SUFFIX,walletconnect.com
 DOMAIN-SUFFIX,walletconnect.org
+DOMAIN-SUFFIX,walletconnect.network
+DOMAIN-SUFFIX,web3modal.org
 DOMAIN-SUFFIX,debank.com
 DOMAIN-SUFFIX,revoke.cash
 
@@ -23,6 +26,14 @@ DOMAIN-SUFFIX,solana.com
 DOMAIN-SUFFIX,publicnode.com
 DOMAIN-SUFFIX,drpc.org
 DOMAIN-SUFFIX,chainlist.org
+DOMAIN-SUFFIX,chainid.network
+
+# 公链与官方 RPC（避免落入交易所大类或 Telegram 公共分类）
+DOMAIN-SUFFIX,ethereum.org
+DOMAIN-SUFFIX,bnbchain.org
+DOMAIN-SUFFIX,base.org
+DOMAIN-SUFFIX,ton.org
+DOMAIN-SUFFIX,toncenter.com
 
 # 区块链浏览器
 DOMAIN-SUFFIX,etherscan.io
@@ -53,6 +64,8 @@ DOMAIN-SUFFIX,coingecko.com
 DOMAIN-SUFFIX,dexscreener.com
 DOMAIN-SUFFIX,dextools.io
 DOMAIN-SUFFIX,defillama.com
+# DefiLlama 实际 API 使用 api.llama.fi 等地址。
+DOMAIN-SUFFIX,llama.fi
 
 # 资讯平台
 DOMAIN-SUFFIX,coindesk.com

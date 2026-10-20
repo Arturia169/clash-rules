@@ -1,10 +1,5 @@
-# Telegram 常用域名与 Nicegram 补充
+# Telegram 第三方客户端域名补充（Nicegram）
 # 匹配策略组: 📲 Telegram
-# IP 网段由主配置的公共 telegram_ip 规则集维护，此处不重复收录。
+# 官方域名与 IP 交由主配置的公共 telegram_domain / telegram_ip 规则集维护。
 
-DOMAIN-SUFFIX,telegram.org
-DOMAIN-SUFFIX,t.me
-DOMAIN-SUFFIX,tdesktop.com
-DOMAIN-SUFFIX,telegra.ph
-DOMAIN-SUFFIX,telegram.me
 DOMAIN-SUFFIX,nicegram.app

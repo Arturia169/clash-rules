@@ -11,7 +11,7 @@
 | [`rules/custom_crypto.list`](rules/custom_crypto.list) | 主流加密货币交易所补充（币安、OKX、Bybit、Gate 等） | `💰 加密交易所` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_crypto.list` |
 | [`rules/custom_web3.list`](rules/custom_web3.list) | Web3 钱包、链上 RPC、区块链浏览器、DeFi 与跨链服务 | `🌐 Web3链上` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_web3.list` |
 | [`rules/custom_speedtest.list`](rules/custom_speedtest.list) | 节点测速平台 | `🚀 节点测速` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_speedtest.list` |
-| [`rules/custom_telegram.list`](rules/custom_telegram.list) | Telegram 常用域名与 Nicegram 补充 | `📲 Telegram` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_telegram.list` |
+| [`rules/custom_telegram.list`](rules/custom_telegram.list) | Telegram 第三方客户端（Nicegram）补充 | `📲 Telegram` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_telegram.list` |
 | [`rules/custom_google.list`](rules/custom_google.list) | Google Play 与国区特殊加速域名 | `🍀 Google` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_google.list` |
 
 ## 语法规范说明
@@ -42,11 +42,11 @@ rule-providers:
 rules:
   - RULE-SET,custom_chatgpt,🤖 ChatGPT
   - RULE-SET,custom_proxy,🚀 默认代理
+  - RULE-SET,custom_crypto,💰 加密交易所
+  - RULE-SET,custom_web3,🌐 Web3链上
   - RULE-SET,custom_telegram,📲 Telegram
   - RULE-SET,custom_google,🍀 Google
   - RULE-SET,custom_speedtest,🚀 节点测速
-  - RULE-SET,custom_crypto,💰 加密交易所
-  - RULE-SET,custom_web3,🌐 Web3链上
 ```
 
 ## Web3 规则维护与生效
@@ -54,12 +54,16 @@ rules:
 - `custom_web3.list` 按钱包、RPC、浏览器、DeFi、跨链、行情和资讯分类维护。
 - 使用 `DOMAIN-SUFFIX` 覆盖服务域名及其子域名；已覆盖的子域名不重复添加。
 - 官网与 API/RPC 可能使用不同后缀，例如 `quicknode.com` 与 `quiknode.pro`、`1inch.io` 与 `1inch.com`，需要分别收录。
-- 如果主配置还使用公共 `category-cryptocurrency` 规则集，建议顺序为交易所专用 `custom_crypto`、`custom_web3`、公共加密货币分类。这样 DeBank、Aave、dRPC 等服务会先进入 Web3 策略组。
+- 主配置中，`custom_crypto`、`custom_web3` 应优先于 Telegram 公共域名分类、公共 `category-cryptocurrency` 和 Google 等服务 IP 规则。这样 TON、DeBank、Aave、dRPC 等服务会先进入指定策略组；公共加密货币分类包含公链、钱包和资讯，并非仅有交易所。
+- 补充实际服务域名：Phantom 官网与开发文档使用 `phantom.com`；WalletConnect 还使用 `walletconnect.network`，连接组件包含 `web3modal.org`；链元数据使用 `chainid.network`，DefiLlama API 使用 `llama.fi`。Ethereum、BNB Chain、Base、TON 与 TON Center 按 Web3 分类维护。
 - 本地修改需同步至 GitHub 后，使用 HTTP 规则集的客户端才会获取更新；可在客户端手动更新规则集，或等待配置中的更新周期。
+
+补充域名依据：[Phantom 官方文档](https://docs.phantom.com/introduction)、[WalletConnect 官方 SDK 页面](https://walletconnect.network/sdk)、[公共加密货币域名清单](https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-cryptocurrency.list)、[链元数据仓库](https://github.com/ethereum-lists/chains)、[Base 官方说明](https://www.base.org/blog/base-mainnet-is-open-for-builders)、[TON Center 官方文档](https://docs.ton.org/ecosystem/api/toncenter/v3/overview)、[DefiLlama API 文档](https://github.com/DefiLlama/api-docs/blob/main/llms-free.txt)。
 
 ## 其他自定义规则维护
 
-- 测速：使用 `DOMAIN-KEYWORD,speedtest` 与 `DOMAIN-KEYWORD,ookla` 补充运营商自建测速主机，例如 `losangeles.ca.speedtest.frontier.com:8080`；规则匹配域名，不限制端口。3.0 主配置也保留这两条关键词作为本地兜底，无需等待远程规则更新即可生效。无关键词的第三方测速域名仍需按实际连接补充，不使用通用 `8080` 端口规则。`measurementlab.net` 覆盖 M-Lab 网站与服务发现，`measurement-lab.org` 覆盖实际测速服务器。FAST 从自定义测速名单中移除，在 3.0 配置中由 Netflix 公共规则统一处理页面和 CDN 流量；`www.gstatic.com` 由 Google 规则接管。
-- Telegram：自定义规则仅维护域名补充，IPv4/IPv6 网段统一交由主配置的公共 `telegram_ip`（MetaCubeX `telegram.mrs`）维护，不再手动重复收录。Nicegram 使用 `nicegram.app` 后缀，避免关键词匹配到无关域名。`telegram.org` 已覆盖 `api.telegram.org`。
+- 测速：使用 `DOMAIN-KEYWORD,speedtest` 与 `DOMAIN-KEYWORD,ookla` 补充运营商自建测速主机，例如 `losangeles.ca.speedtest.frontier.com:8080`；规则匹配域名，不限制端口。关键词统一维护在本规则集，主配置通过 `custom_speedtest` 引用。无关键词的第三方测速域名仍需按实际连接补充，不使用通用 `8080` 端口规则。`measurementlab.net` 覆盖 M-Lab 网站与服务发现，`measurement-lab.org` 覆盖实际测速服务器。FAST 从自定义测速名单中移除，在 3.0 配置中由 Netflix 公共规则统一处理页面和 CDN 流量；`www.gstatic.com` 由 Google 规则接管。
+- Telegram：自定义规则仅补充 Nicegram，官方域名与 IPv4/IPv6 网段统一交由主配置的公共 `telegram_domain` / `telegram_ip` 维护，不再手动重复收录。Nicegram 使用 `nicegram.app` 后缀，避免关键词匹配到无关域名；TON 区块链域名由优先级更高的 `custom_web3` 接管。
+- 分流优先级：`custom_proxy` 等个人明确规则应排在对应公共大类之前，例如 `typesafe.ai` 在公共 AI 分类中，但本配置明确要求它走默认代理。游戏内容下载域名直连规则应优先于 Microsoft 等平台大类；服务 IP 规则用于专用域名规则之后的兜底。
 - 交易所：同时保留 `gate.io` 和 `gate.com`，覆盖原有域名与当前官方域名。
 - AI、开发工具与 Google 补充规则沿用原有配置，不重复添加公共规则已覆盖的官方 AI 域名。

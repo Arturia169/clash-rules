@@ -5,5 +5,9 @@
 
 DOMAIN,speed.cloudflare.com
 DOMAIN-SUFFIX,speedtest.net
+# 运营商自建服务器可能使用自己的域名，例如 losangeles.ca.speedtest.frontier.com。
+# 关键词覆盖 speedtest / ookla 测速主机；不按 8080 端口兜底，以免影响其他服务。
+DOMAIN-KEYWORD,speedtest
+DOMAIN-KEYWORD,ookla
 DOMAIN-SUFFIX,measurementlab.net
 DOMAIN-SUFFIX,measurement-lab.org

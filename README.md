@@ -59,7 +59,7 @@ rules:
 
 ## 其他自定义规则维护
 
-- 测速：`measurementlab.net` 覆盖 M-Lab 网站与服务发现，`measurement-lab.org` 覆盖实际测速服务器。FAST 从自定义测速名单中移除，在 3.0 配置中由 Netflix 公共规则统一处理页面和 CDN 流量；`www.gstatic.com` 由 Google 规则接管。
+- 测速：使用 `DOMAIN-KEYWORD,speedtest` 与 `DOMAIN-KEYWORD,ookla` 补充运营商自建测速主机，例如 `losangeles.ca.speedtest.frontier.com:8080`；规则匹配域名，不限制端口。3.0 主配置也保留这两条关键词作为本地兜底，无需等待远程规则更新即可生效。无关键词的第三方测速域名仍需按实际连接补充，不使用通用 `8080` 端口规则。`measurementlab.net` 覆盖 M-Lab 网站与服务发现，`measurement-lab.org` 覆盖实际测速服务器。FAST 从自定义测速名单中移除，在 3.0 配置中由 Netflix 公共规则统一处理页面和 CDN 流量；`www.gstatic.com` 由 Google 规则接管。
 - Telegram：使用 [官方 IP 清单](https://core.telegram.org/resources/cidr.txt) 维护 IPv4/IPv6 网段；Nicegram 使用 `nicegram.app` 后缀，避免关键词匹配到无关域名。`telegram.org` 已覆盖 `api.telegram.org`。
 - 交易所：同时保留 `gate.io` 和 `gate.com`，覆盖原有域名与当前官方域名。
 - AI、开发工具与 Google 补充规则沿用原有配置，不重复添加公共规则已覆盖的官方 AI 域名。

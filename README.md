@@ -16,7 +16,7 @@
 | 文件名 | 用途描述 | 建议绑定策略组 | CDN 加速直链 |
 | :--- | :--- | :--- | :--- |
 | [`rules/custom_proxy.list`](rules/custom_proxy.list) | 自用开发、搜索与 MCP 工具（Tavily, Firecrawl, Cline 等） | `🚀 默认代理` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_proxy.list` |
-| [`rules/custom_chatgpt.list`](rules/custom_chatgpt.list) | 自用 AI 镜像与 API 分流补充 | `🤖 ChatGPT` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_chatgpt.list` |
+| [`rules/custom_ai.list`](rules/custom_ai.list) | 自用 AI 镜像与 API 分流补充 | `🤖 AI` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_ai.list` |
 | [`rules/custom_crypto.list`](rules/custom_crypto.list) | 主流加密货币交易所补充（币安、OKX、Bybit、Gate 等） | `💰 加密交易所` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_crypto.list` |
 | [`rules/custom_web3.list`](rules/custom_web3.list) | Web3 钱包、链上 RPC、区块链浏览器、DeFi 与跨链服务 | `🌐 Web3链上` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_web3.list` |
 | [`rules/custom_speedtest.list`](rules/custom_speedtest.list) | 节点测速平台 | `🚀 节点测速` | `https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_speedtest.list` |
@@ -41,7 +41,7 @@ rule-anchor:
 
 rule-providers:
   custom_proxy: { <<: *class, url: "https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_proxy.list", path: ./rules/custom_proxy.list }
-  custom_chatgpt: { <<: *class, url: "https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_chatgpt.list", path: ./rules/custom_chatgpt.list }
+  custom_ai: { <<: *class, url: "https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_ai.list", path: ./rules/custom_ai.list }
   custom_crypto: { <<: *class, url: "https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_crypto.list", path: ./rules/custom_crypto.list }
   custom_web3: { <<: *class, url: "https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_web3.list", path: ./rules/custom_web3.list }
   custom_speedtest: { <<: *class, url: "https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_speedtest.list", path: ./rules/custom_speedtest.list }
@@ -49,7 +49,7 @@ rule-providers:
   custom_google: { <<: *class, url: "https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_google.list", path: ./rules/custom_google.list }
 
 rules:
-  - RULE-SET,custom_chatgpt,🤖 ChatGPT
+  - RULE-SET,custom_ai,🤖 AI
   - RULE-SET,custom_proxy,🚀 默认代理
   - RULE-SET,custom_crypto,💰 加密交易所
   - RULE-SET,custom_web3,🌐 Web3链上

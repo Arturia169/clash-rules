@@ -13,10 +13,10 @@ rules:
   - AND,((RULE-SET,geolocation-!cn),(DST-PORT,443),(NETWORK,UDP)),REJECT
 
   # ==================== 3. 自用 AI / 搜索 / MCP 工具链 ====================
-  - RULE-SET,custom_chatgpt,🤖 ChatGPT
+  - RULE-SET,custom_ai,🤖 AI
   # 个人明确分流优先于公共 AI 大类，避免 typesafe.ai 等被提前接管。
   - RULE-SET,custom_proxy,🚀 默认代理
-  - RULE-SET,ai,🤖 ChatGPT
+  - RULE-SET,ai,🤖 AI
 
   # ==================== 4. 交易所与 Web3 个人补充 ====================
   # TON 等链上服务优先于 Telegram 公共分类；所有专用域名优先于服务 IP 兜底。
@@ -298,8 +298,8 @@ proxy-groups:
   - {name: 🐟 漏网之鱼, type: select, proxies: [🚀 默认代理, 直连, 💎 自建专线, ♻️ 自动选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 🇹🇼 台湾节点, 🇬🇧 英国节点], include-all: true}
   - {name: 🛑 广告拦截, type: select, proxies: [REJECT, 直连, 🚀 默认代理]}
 
-  # 2. 【AI 与搜索】(ChatGPT 默认同美区故转；香港出口云途/NAT 不参与 AI 与 TikTok 策略)
-  - {name: 🤖 ChatGPT, type: select, default-selected: 🤖 AI故转, proxies: [🤖 AI故转, 🇺🇲 美国节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇹🇼 台湾节点, 🇬🇧 英国节点], include-all: true, exclude-filter: '(?i)(?:🇭🇰|香港|港|九龙|新界|沙田|荃湾|葵涌|(?<![A-Za-z])(?:HK|HKG|Hong[ _-]?Kong|Kowloon)(?![A-Za-z])|^(?:云途-(?:Reality|HY2|WS优选)|NAT-(?:Reality|HY2))$|直连)'}
+  # 2. 【AI 与搜索】(AI 类服务默认同美区故转；香港出口云途/NAT 不参与 AI 与 TikTok 策略)
+  - {name: 🤖 AI, type: select, default-selected: 🤖 AI故转, proxies: [🤖 AI故转, 🇺🇲 美国节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇹🇼 台湾节点, 🇬🇧 英国节点], include-all: true, exclude-filter: '(?i)(?:🇭🇰|香港|港|九龙|新界|沙田|荃湾|葵涌|(?<![A-Za-z])(?:HK|HKG|Hong[ _-]?Kong|Kowloon)(?![A-Za-z])|^(?:云途-(?:Reality|HY2|WS优选)|NAT-(?:Reality|HY2))$|直连)'}
   - {name: 🍀 Google, type: select, proxies: [🚀 默认代理, 💎 自建专线, ♻️ 自动选择, 🇯🇵 日本节点, 🇭🇰 香港节点, 🇸🇬 狮城节点, 🇺🇲 美国节点, 直连], include-all: true}
 
   # 3. 【通信与社交平台】(支持直接在卡片内点选特定节点，互不干扰)
@@ -366,7 +366,7 @@ rule-anchor:
 rule-providers:
   # ===== 个人自建远程规则集 (GitHub / jsDelivr CDN 高速加速) =====
   custom_proxy: { <<: *class, url: "https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_proxy.list" }
-  custom_chatgpt: { <<: *class, url: "https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_chatgpt.list" }
+  custom_ai: { <<: *class, url: "https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_ai.list" }
   custom_crypto: { <<: *class, url: "https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_crypto.list" }
   custom_web3: { <<: *class, url: "https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_web3.list" }
   custom_speedtest: { <<: *class, url: "https://testingcf.jsdelivr.net/gh/Arturia169/clash-rules@main/rules/custom_speedtest.list" }

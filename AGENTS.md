@@ -19,7 +19,7 @@ README.md                  # 清单表 + 配置示例 + 各类规则维护说明
 | 文件 | 管什么 | 策略组 |
 | :--- | :--- | :--- |
 | `custom_proxy.list` | 自用开发、搜索、MCP 工具链（Tavily / Firecrawl / Context7 等） | 🚀 默认代理 |
-| `custom_chatgpt.list` | 自用 AI 镜像与 API 补充 | 🤖 ChatGPT |
+| `custom_ai.list` | 自用 AI 镜像与 API 补充 | 🤖 AI |
 | `custom_telegram.list` | **仅**第三方客户端补充（Nicegram） | 📲 Telegram |
 | `custom_google.list` | Google Play 与国区特殊加速域名 | 🍀 Google |
 | `custom_speedtest.list` | 节点测速平台 + 运营商自建测速主机关键词 | 🚀 节点测速 |
